@@ -146,7 +146,7 @@ export function AskClaude() {
         type="button"
         onClick={() => setOpen(true)}
         data-screenshot-hide="true"
-        className="pointer-events-auto absolute bottom-20 right-4 z-30 flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-400/15 px-4 py-2 font-mono text-xs uppercase tracking-widest text-cyan-100 shadow-[0_0_30px_-10px_rgba(0,240,255,0.6)] backdrop-blur-xl hover:bg-cyan-400/25"
+        className="pointer-events-auto absolute bottom-20 right-4 z-[45] flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-400/15 px-4 py-2 font-mono text-xs uppercase tracking-widest text-cyan-100 shadow-[0_0_30px_-10px_rgba(0,240,255,0.6)] backdrop-blur-xl hover:bg-cyan-400/25 max-md:bottom-24"
         aria-label="Ask Claude"
       >
         <svg
@@ -168,7 +168,7 @@ export function AskClaude() {
   return (
     <div
       data-screenshot-hide="true"
-      className="pointer-events-auto absolute bottom-20 right-4 z-30 flex h-[520px] w-[400px] flex-col rounded-lg border border-cyan-400/25 bg-[rgba(4,6,12,0.95)] backdrop-blur-2xl shadow-[0_0_60px_-15px_rgba(0,240,255,0.45)]"
+      className="pointer-events-auto absolute bottom-20 right-4 z-[55] flex h-[520px] w-[400px] flex-col rounded-lg border border-cyan-400/25 bg-[rgba(4,6,12,0.95)] backdrop-blur-2xl shadow-[0_0_60px_-15px_rgba(0,240,255,0.45)] max-md:inset-x-2 max-md:bottom-20 max-md:h-[70vh] max-md:w-auto"
     >
       <div className="flex items-center justify-between border-b border-cyan-400/15 px-4 py-2.5">
         <div className="flex items-center gap-2">

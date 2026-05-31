@@ -28,6 +28,8 @@ import { SettingsSync } from "@/components/HUD/SettingsSync";
 import { HoveredCountryLabel } from "@/components/HUD/HoveredCountryLabel";
 import { useGlobeStore } from "@/stores/useGlobeStore";
 import { BootScreen } from "@/components/HUD/BootScreen";
+import { useIsMobile } from "@/lib/useIsMobile";
+import { MobileApp } from "@/components/Mobile/MobileApp";
 
 const Globe = dynamic(
   () => import("@/components/Globe/Globe").then((m) => m.Globe),
@@ -39,6 +41,8 @@ const Globe = dynamic(
 
 export default function Home() {
   const hudHidden = useGlobeStore((s) => s.hudHidden);
+  const isMobile = useIsMobile();
+
   return (
     <>
     <main className="relative h-screen w-screen overflow-hidden">
@@ -48,6 +52,13 @@ export default function Home() {
           <Globe />
         </GlobeErrorBoundary>
       </div>
+
+      {/* MOBILE / TABLET (<=1024px): dedicated layout. Desktop tree below is untouched. */}
+      {isMobile === true && <MobileApp />}
+
+      {/* DESKTOP (>1024px): original layout, unchanged. */}
+      {isMobile === false && (
+      <>
       <div
         className={`hud-tinted pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 ${
           hudHidden ? "opacity-0" : "opacity-100"
@@ -82,16 +93,26 @@ export default function Home() {
         <OnboardingTour />
       </div>
       <KeyboardShortcuts />
+      </>
+      )}
+
+      {/* Shared on every layout */}
       <DeepLinkSync />
       <SettingsSync />
       <AudioEngine />
     </main>
-    <div className="side-rail">
-      <TacticalBoard />
-    </div>
-    <div className="bottom-rail">
-      <RegionalBars />
-    </div>
+
+    {/* Desktop-only rails: siblings of main so the main zoom never shrinks them */}
+    {isMobile === false && (
+      <>
+        <div className="side-rail">
+          <TacticalBoard />
+        </div>
+        <div className="bottom-rail">
+          <RegionalBars />
+        </div>
+      </>
+    )}
     </>
   );
 }

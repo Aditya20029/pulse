@@ -68,6 +68,19 @@ main {
   zoom: 0.88;
 }
 
+/* Mobile / tablet: never zoom, and let content scroll naturally. The mobile
+   layout (components/Mobile) handles its own positioning at 1:1 scale. */
+@media (max-width: 1024px) {
+  main {
+    zoom: 1 !important;
+    cursor: default;
+  }
+  body > .side-rail,
+  body > .bottom-rail {
+    display: none !important;
+  }
+}
+
 body > .side-rail {
   position: fixed;
   top: 0;
