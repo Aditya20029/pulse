@@ -72,10 +72,11 @@ Core capabilities:
 
 ## Live demo & screenshots
 
-- **Live app:** _add your Vercel URL here after deploying_
-- **Embed widget:** `/embed` (globe only, for iframes)
-- **Printable report:** `/report`
-- **RSS digest:** `/api/rss/digest`
+- **Live app:** **https://global-pulse-ai.site**
+- **Embed widget:** https://global-pulse-ai.site/embed (globe only, for iframes)
+- **Printable report:** https://global-pulse-ai.site/report
+- **RSS digest:** https://global-pulse-ai.site/api/rss/digest
+- **Social card:** https://global-pulse-ai.site/opengraph-image
 
 > _Drop screenshots / a demo GIF into a `/docs` folder and reference them here._
 
