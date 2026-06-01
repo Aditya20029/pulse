@@ -45,3 +45,7 @@ next-env.d.ts
 # Personal showcase copy (kept local, not published)
 docs/HANDSHAKE.md
 docs/LINKEDIN.md
+
+# Agent scaffolding notes (local only)
+CLAUDE.md
+AGENTS.md
