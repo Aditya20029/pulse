@@ -1,4 +1,4 @@
-# 🌍 Pulse — Global News Intelligence Globe
+# 🌍 Pulse, Global News Intelligence Globe
 
 An interactive, real-time 3D globe that visualizes breaking news from around the
 world as glowing event clusters, and generates **Claude-powered intelligence
@@ -72,13 +72,31 @@ Core capabilities:
 
 ## Live demo & screenshots
 
-- **Live app:** **https://global-pulse-ai.site**
-- **Embed widget:** https://global-pulse-ai.site/embed (globe only, for iframes)
-- **Printable report:** https://global-pulse-ai.site/report
-- **RSS digest:** https://global-pulse-ai.site/api/rss/digest
-- **Social card:** https://global-pulse-ai.site/opengraph-image
+**▶ Live app: [global-pulse-ai.site](https://global-pulse-ai.site)**
 
-> _Drop screenshots / a demo GIF into a `/docs` folder and reference them here._
+Also: [embed widget](https://global-pulse-ai.site/embed) · [printable report](https://global-pulse-ai.site/report) · [RSS digest](https://global-pulse-ai.site/api/rss/digest) · [social card](https://global-pulse-ai.site/opengraph-image)
+
+<!-- Hero: the live generated social card (renders immediately, no upload needed) -->
+<img src="https://global-pulse-ai.site/opengraph-image" alt="Pulse, Global News Intelligence Globe" width="100%" />
+
+<!-- Gallery + demo GIF: add your own captures into docs/ (instructions below) -->
+<table>
+  <tr>
+    <td width="50%"><img src="docs/globe.png" alt="3D news globe with event clusters" /></td>
+    <td width="50%"><img src="docs/briefing.png" alt="Claude intelligence briefing panel" /></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/intel.png" alt="Intelligence panel with live channels and AI analysis" /></td>
+    <td width="50%"><img src="docs/mobile.png" alt="Mobile layout" /></td>
+  </tr>
+</table>
+
+![Pulse demo](docs/demo.gif)
+
+> **How to generate these assets** (all built into the app):
+> 1. **Stills:** open the live site, frame a shot, click **Export, HD** (or **4K poster**) in the top bar. Save the PNGs into `docs/` as `globe.png`, `briefing.png` (open a cluster first), `intel.png` (scroll the right panel), and `mobile.png` (phone screenshot).
+> 2. **Demo GIF:** click **REC** on the bottom timeline to capture a 10s `.webm`, then convert to `docs/demo.gif` (e.g. `ffmpeg -i pulse-timelapse.webm -vf "fps=15,scale=900:-1" docs/demo.gif`, or any online webm to gif tool).
+> 3. Commit the `docs/` folder. The images above render automatically.
 
 ---
 
@@ -92,7 +110,7 @@ Core capabilities:
 | Styling          | **Tailwind CSS v4**                                               |
 | State            | **Zustand 5** (+ `persist` middleware)                            |
 | Data fetching    | **SWR 2** (client), native `fetch` with `AbortController` (server) |
-| AI               | **Anthropic SDK** — `claude-opus-4-7`, streamed                   |
+| AI               | **Anthropic SDK**, `claude-opus-4-7`, streamed                   |
 | Geo data         | **topojson-client** + world-atlas (country polygons)             |
 | Export           | **html-to-image**, MediaRecorder, SpeechSynthesis                 |
 | Deployment       | **Vercel** (Pro recommended for 60s functions)                   |
@@ -153,7 +171,7 @@ orchestrated by the API routes.
 | `hackernews.ts`     | Hacker News Firebase  | Top tech/science stories.                                      |
 | `mock-events.ts`    | bundled fallback      | ~80 realistic worldwide events, used only when every live source is unreachable. URLs resolve to Google News searches. |
 
-Each fetcher uses an `AbortController` timeout (2.5–3.5s) so one slow source
+Each fetcher uses an `AbortController` timeout (2.5 to 3.5s) so one slow source
 can't stall the whole request. Each returns a normalized `RawEvent`:
 
 ```ts
@@ -181,14 +199,14 @@ other**. The highest-scoring category wins. Colors and labels live in
 Reddit / RSS / HN headlines have no coordinates, so we geolocate them:
 
 1. **`geocodeHeadlineAll(title)`** scans the headline for any of ~200 known
-   places — 60+ major cities, 60+ countries, US states, regions, and 30+
+   places, 60+ major cities, 60+ countries, US states, regions, and 30+
    leader/institution aliases ("Trump"→DC, "Putin"→Moscow, "Hamas"→Gaza,
    "EU"→Brussels, etc.). A headline can match up to 3 places, producing one
-   event per place so a "US–Iran talks" story shows in both Washington and
+   event per place so a "US-Iran talks" story shows in both Washington and
    Tehran. Longer names win over shorter ("South Korea" beats "Korea").
 2. **`geocodeBySource(domain)`** is the fallback: if no place is found, the
    story is anchored at the **newsroom HQ** of its source outlet (75+ outlets
-   mapped — BBC→London, Al Jazeera→Doha, NHK→Tokyo, Globo→Rio, …) with a small
+   mapped, BBC→London, Al Jazeera→Doha, NHK→Tokyo, Globo→Rio, …) with a small
    random jitter so same-source stories spread out instead of stacking.
 
 This two-tier approach means almost every headline lands somewhere sensible,
@@ -228,10 +246,10 @@ cadence.
 
 ### 6. Market & geophysical data (`app/api/data/*`)
 
-- `stocks` — 12 global equity indices (S&P, Nasdaq, Nikkei, FTSE, DAX, Sensex…)
-- `commodities` — gold, silver, oil (WTI/Brent), gas, copper, wheat, coffee +
+- `stocks`, 12 global equity indices (S&P, Nasdaq, Nikkei, FTSE, DAX, Sensex…)
+- `commodities`, gold, silver, oil (WTI/Brent), gas, copper, wheat, coffee +
   FX pairs + BTC/ETH/SOL
-- `earthquakes` — **live USGS** M4.5+ feed (real data), with a fallback set
+- `earthquakes`, **live USGS** M4.5+ feed (real data), with a fallback set
 
 Market values use a deterministic 5-minute-seeded random walk around realistic
 baselines (so they move believably without a paid markets API; swap in a real
@@ -248,11 +266,11 @@ non-AI fallback if `ANTHROPIC_API_KEY` is missing or the call fails.
 | Endpoint                 | Purpose                                                                 | Notable behavior |
 | ------------------------ | ----------------------------------------------------------------------- | ---------------- |
 | `/api/news/brief`        | Per-cluster analyst briefing                                            | **Streamed** token-by-token; supports `framing: devil \| counterfactual` and `language: es\|fr\|hi\|zh\|ar\|de`. |
-| `/api/news/anomalies`    | Detects 3–4 statistically/geopolitically notable patterns              | Fingerprint-cached. |
+| `/api/news/anomalies`    | Detects 3 to 4 statistically/geopolitically notable patterns              | Fingerprint-cached. |
 | `/api/news/narratives`   | Groups distant clusters into single story threads                       | Fingerprint-cached. |
-| `/api/news/forecast`     | Predicts 3–4 developments in the next 24h with probabilities            | Fingerprint-cached. |
+| `/api/news/forecast`     | Predicts 3 to 4 developments in the next 24h with probabilities            | Fingerprint-cached. |
 | `/api/news/digest`       | "What mattered today" narrative digest                                  | Used by `/report` and `/api/rss/digest`. |
-| `/api/news/chat`         | "Ask Claude" — answers questions using live globe state as context      | Keeps short history. |
+| `/api/news/chat`         | "Ask Claude", answers questions using live globe state as context      | Keeps short history. |
 
 ### Streaming briefings
 
@@ -277,7 +295,7 @@ Built with react-three-fiber. The scene graph (`components/Globe/Globe.tsx`):
 | Component            | What it renders                                                              |
 | -------------------- | ---------------------------------------------------------------------------- |
 | `Earth.tsx`          | Sphere with a custom GLSL shader blending **8K day texture** and **8K night-lights texture** across the real sun-position terminator, plus specular ocean shine, normal-map relief, and a warm terminator glow. Switches to a canvas-rendered political map in "political" view. Handles hover (lat/lng readout) and click (country drilldown). |
-| `Atmosphere.tsx`     | Back-side Fresnel shader shell — the thin blue rim halo.                     |
+| `Atmosphere.tsx`     | Back-side Fresnel shader shell, the thin blue rim halo.                     |
 | `Stars.tsx`          | 7,000 GPU points, color-varied, slowly rotating starfield.                   |
 | `Moon.tsx`           | Procedurally-cratered moon orbiting at distance with its own light.          |
 | `Auroras.tsx`        | FBM-noise shader curtains over the poles; **hue reacts to global tone** (shifts red when the news mood is negative). |
@@ -286,7 +304,7 @@ Built with react-three-fiber. The scene graph (`components/Globe/Globe.tsx`):
 | `CityDots.tsx`       | 60+ major cities that fade in as you zoom closer.                            |
 | `CountryHighlight.tsx` | Glowing cyan outline of the country under your cursor (point-in-polygon).   |
 | `Earthquakes.tsx`    | Expanding concentric ripples at live USGS epicenters.                        |
-| `NewsCluster.tsx`    | The pulsing event markers — a category-shaped sprite (triangle=conflict, hexagon=tech, atom=science, leaf=environment, …) + a soft halo. Distance-aware scaling keeps them readable from any zoom; halos fade out at extreme close-up so they don't occlude the surface. |
+| `NewsCluster.tsx`    | The pulsing event markers, a category-shaped sprite (triangle=conflict, hexagon=tech, atom=science, leaf=environment, …) + a soft halo. Distance-aware scaling keeps them readable from any zoom; halos fade out at extreme close-up so they don't occlude the surface. |
 | `ConnectionArc.tsx`  | Animated dashed great-circle arcs between a selected cluster and related ones.|
 
 `lib/globe-utils.ts` does the lat/lng → 3D vector math and builds the Bezier
@@ -337,17 +355,17 @@ All routes are under `app/api/`. AI routes are POST and rate-limited per IP.
 | Method | Route                      | Body / Query                              | Returns |
 | ------ | -------------------------- | ----------------------------------------- | ------- |
 | GET    | `/api/news/globe`          | `?timespan=24h&q=...`                      | `{ clusters, totalEvents, fetchedAt }` |
-| GET    | `/api/news/feed`           | —                                         | `{ headlines[] }` (fast: RSS+Reddit+HN) |
+| GET    | `/api/news/feed`           | n/a | `{ headlines[] }` (fast: RSS+Reddit+HN) |
 | POST   | `/api/news/brief`          | `{ cluster, framing?, language? }`         | **streamed** briefing JSON |
 | POST   | `/api/news/anomalies`      | `{ clusters }`                            | `{ anomalies[], signal }` |
 | POST   | `/api/news/narratives`     | `{ clusters }`                            | `{ narratives[] }` |
 | POST   | `/api/news/forecast`       | `{ clusters }`                            | `{ predictions[], summary }` |
 | POST   | `/api/news/digest`         | `{ clusters }`                            | `{ title, summary, sections[] }` |
 | POST   | `/api/news/chat`           | `{ message, clusters, ...state, history }` | `{ reply }` |
-| GET    | `/api/data/stocks`         | —                                         | `{ indices[] }` |
-| GET    | `/api/data/commodities`    | —                                         | `{ commodities[], currencies[], crypto[] }` |
-| GET    | `/api/data/earthquakes`    | —                                         | `{ quakes[] }` (live USGS) |
-| GET    | `/api/rss/digest`          | —                                         | RSS 2.0 XML of the daily digest |
+| GET    | `/api/data/stocks`         | n/a | `{ indices[] }` |
+| GET    | `/api/data/commodities`    | n/a | `{ commodities[], currencies[], crypto[] }` |
+| GET    | `/api/data/earthquakes`    | n/a | `{ quakes[] }` (live USGS) |
+| GET    | `/api/rss/digest`          | n/a | RSS 2.0 XML of the daily digest |
 
 Response header `x-pulse-source` lists which feeds contributed
 (`gdelt,rss,reddit,hn` or `mock`).
@@ -358,12 +376,12 @@ Response header `x-pulse-source` lists which feeds contributed
 
 Three Zustand stores:
 
-- **`useGlobeStore.ts`** — the live app state: clusters, selection, hover,
+- **`useGlobeStore.ts`**, the live app state: clusters, selection, hover,
   category filters, timespan, view mode, time-scrub position, camera fly-to,
   pinned cluster, HUD visibility. Not persisted (it's live data).
-- **`useBookmarksStore.ts`** — saved views + recent searches (`persist` →
+- **`useBookmarksStore.ts`**, saved views + recent searches (`persist` →
   localStorage).
-- **`useSettingsStore.ts`** — theme, default view mode, sound, auto-rotate
+- **`useSettingsStore.ts`**, theme, default view mode, sound, auto-rotate
   (`persist` → localStorage), re-applied on load by `SettingsSync`.
 
 ---
@@ -422,7 +440,7 @@ npm run lint         # eslint
 ```
 
 > **Windows / shell note:** if briefings come back as the generic fallback,
-> make sure your shell doesn't export an empty `ANTHROPIC_API_KEY` — an empty
+> make sure your shell doesn't export an empty `ANTHROPIC_API_KEY`, an empty
 > environment variable overrides `.env.local`. Run `unset ANTHROPIC_API_KEY`
 > before `npm run dev`, or just rely on Vercel (its env is clean).
 
@@ -447,11 +465,11 @@ committed.
    preset auto-detects Next.js.
 3. **Project → Settings → Environment Variables:** add
    `ANTHROPIC_API_KEY` (and optionally `NEXT_PUBLIC_APP_URL`).
-4. **Vercel Pro is recommended** — AI routes declare `maxDuration = 60` for
+4. **Vercel Pro is recommended**, AI routes declare `maxDuration = 60` for
    streaming Opus + multi-source fetches. On the Hobby tier functions cap at
    10s and heavy briefings may time out.
 5. Deploy. GDELT, RSS, and Hacker News work from Vercel's servers; **Reddit may
-   be rate-limited from datacenter IPs** — the other sources cover it and the
+   be rate-limited from datacenter IPs**, the other sources cover it and the
    `x-pulse-source` header tells you what's live.
 
 ---
@@ -490,17 +508,17 @@ Because the app is public-facing and calls a paid AI model:
 
 ## Data sources & attribution
 
-- **GDELT Project** — global event geodata (DOC & GEO 2.0 APIs).
-- **Reddit** — public subreddit JSON.
-- **RSS** — Reuters, BBC, AP, Al Jazeera, France 24, DW, Euronews, Sky, NHK,
+- **GDELT Project**, global event geodata (DOC & GEO 2.0 APIs).
+- **Reddit**, public subreddit JSON.
+- **RSS**, Reuters, BBC, AP, Al Jazeera, France 24, DW, Euronews, Sky, NHK,
   Nikkei, SCMP, The Hindu, Times of India, CNA, AllAfrica, News24, Globo, NPR,
   Politico, MarketWatch, CNBC, TechCrunch, The Verge, Ars Technica, Wired, NASA,
   Science Daily, Phys.org, Nature, WHO, STAT, Mongabay, ESPN, Variety, and more.
-- **Hacker News** — Firebase API.
-- **USGS** — real-time earthquake GeoJSON.
-- **NASA Blue Marble / Solar System Scope** — Earth textures (CC-BY 4.0).
-- **world-atlas / Natural Earth** — country polygons.
-- **Anthropic Claude** (`claude-opus-4-7`) — all generated analysis.
+- **Hacker News**, Firebase API.
+- **USGS**, real-time earthquake GeoJSON.
+- **NASA Blue Marble / Solar System Scope**, Earth textures (CC-BY 4.0).
+- **world-atlas / Natural Earth**, country polygons.
+- **Anthropic Claude** (`claude-opus-4-7`), all generated analysis.
 
 Live TV embeds link to each network's official YouTube live stream.
 
