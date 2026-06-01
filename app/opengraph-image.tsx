@@ -5,7 +5,14 @@ export const alt = "Pulse, Global News Intelligence Globe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const ORIGIN =
+  process.env.NEXT_PUBLIC_APP_URL ?? "https://global-pulse-ai.site";
+
 export default function OpengraphImage() {
+  const globe = 460;
+  const globeRight = 70;
+  const globeTop = 90;
+
   return new ImageResponse(
     (
       <div
@@ -14,31 +21,76 @@ export default function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background:
-            "radial-gradient(ellipse 70% 60% at 65% 45%, #0b2740 0%, #02040a 60%, #000000 100%)",
+          background: "#000000",
           color: "#e2e8f0",
           fontFamily: "monospace",
           padding: 64,
           position: "relative",
+          overflow: "hidden",
         }}
       >
-        {/* Globe glow circle */}
+        {/* faint space wash behind everything */}
         <div
           style={{
             position: "absolute",
-            right: 90,
-            top: 150,
-            width: 360,
-            height: 360,
-            borderRadius: "50%",
+            inset: 0,
             background:
-              "radial-gradient(circle at 40% 35%, #1d4e6e, #06121e 70%)",
-            boxShadow: "0 0 120px 10px rgba(34,211,238,0.35)",
-            border: "2px solid rgba(125,211,252,0.5)",
+              "radial-gradient(ellipse 70% 60% at 72% 45%, #08263d 0%, #02060c 55%, #000000 100%)",
             display: "flex",
           }}
         />
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+
+        {/* GLOBE: real Earth texture clipped to a sphere */}
+        <div
+          style={{
+            position: "absolute",
+            right: globeRight,
+            top: globeTop,
+            width: globe,
+            height: globe,
+            borderRadius: "50%",
+            overflow: "hidden",
+            display: "flex",
+            boxShadow:
+              "0 0 110px 8px rgba(60,150,255,0.45), inset 0 0 60px rgba(0,0,0,0.4)",
+            border: "1px solid rgba(125,211,252,0.45)",
+          }}
+        >
+          {/* equator band of the day texture (least distorted) */}
+          <img
+            src={`${ORIGIN}/textures/earth_day.jpg`}
+            width={globe + 180}
+            height={globe}
+            style={{
+              objectFit: "cover",
+              filter: "brightness(0.92) saturate(1.05)",
+            }}
+          />
+          {/* limb darkening + light from upper-left = fakes a sphere */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              background:
+                "radial-gradient(circle at 36% 30%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 38%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 48%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.9) 100%)",
+            }}
+          />
+        </div>
+
+        {/* brand mark */}
+        <div
+          style={{ display: "flex", alignItems: "center", gap: 16, zIndex: 1 }}
+        >
           <div
             style={{
               width: 28,
@@ -78,8 +130,9 @@ export default function OpengraphImage() {
             fontSize: 64,
             fontWeight: 700,
             lineHeight: 1.05,
-            maxWidth: 720,
+            maxWidth: 660,
             color: "#f1f5f9",
+            zIndex: 1,
           }}
         >
           Global News Intelligence Globe
@@ -89,7 +142,8 @@ export default function OpengraphImage() {
             marginTop: 20,
             fontSize: 26,
             color: "#94a3b8",
-            maxWidth: 680,
+            maxWidth: 620,
+            zIndex: 1,
           }}
         >
           Real-time world events on an interactive 3D Earth, with
@@ -103,6 +157,7 @@ export default function OpengraphImage() {
             fontSize: 18,
             color: "#67e8f9",
             letterSpacing: 2,
+            zIndex: 1,
           }}
         >
           <span>THREE.JS</span>
