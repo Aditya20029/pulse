@@ -21,7 +21,7 @@ const ORBITS: Orbit[] = [
 
 const SEGMENTS = 64;
 
-function buildOrbitGeometry(orbit: Orbit): {
+function buildOrbitGeometry(): {
   positions: Float32Array;
   alphas: Float32Array;
 } {
@@ -35,7 +35,7 @@ export function Satellites() {
   const groupRef = useRef<THREE.Group>(null);
 
   const orbits = useMemo(() => {
-    return ORBITS.map((o) => buildOrbitGeometry(o));
+    return ORBITS.map(() => buildOrbitGeometry());
   }, []);
 
   const lineRefs = useRef<(THREE.Line | null)[]>([]);

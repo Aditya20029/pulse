@@ -121,7 +121,6 @@ export async function fetchRedditNews(maxTotal: number = 600): Promise<RawEvent[
 
   const seenUrls = new Set<string>();
   const events: RawEvent[] = [];
-  const now = new Date().toISOString();
 
   for (const children of results) {
     for (const item of children) {

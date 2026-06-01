@@ -47,7 +47,7 @@ function extractTrends(clusters: Cluster[]): Array<{ term: string; count: number
   }
   // Prefer multi-word phrases over their individual tokens
   const ranked = Array.from(counts.entries())
-    .filter(([_, n]) => n >= 2)
+    .filter(([, n]) => n >= 2)
     .sort((a, b) => {
       const aIsPhrase = a[0].includes(" ");
       const bIsPhrase = b[0].includes(" ");
