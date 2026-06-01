@@ -168,6 +168,14 @@ export default function OpengraphImage() {
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      // Cache hard so crawlers / the CDN serve a stored copy instead of
+      // re-rendering the image (which is CPU-heavy) on every request.
+      headers: {
+        "cache-control":
+          "public, immutable, no-transform, max-age=86400, s-maxage=604800",
+      },
+    },
   );
 }

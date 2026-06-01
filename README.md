@@ -76,8 +76,8 @@ Core capabilities:
 
 Also: [embed widget](https://global-pulse-ai.site/embed) · [printable report](https://global-pulse-ai.site/report) · [RSS digest](https://global-pulse-ai.site/api/rss/digest) · [social card](https://global-pulse-ai.site/opengraph-image)
 
-<!-- Hero: the live generated social card (renders immediately, no upload needed) -->
-<img src="https://global-pulse-ai.site/opengraph-image" alt="Pulse, Global News Intelligence Globe" width="100%" />
+<!-- Hero: committed static render of the social card (no function calls on repo views) -->
+<img src="docs/og.png" alt="Pulse, Global News Intelligence Globe" width="100%" />
 
 <!--
   GALLERY: uncomment this block once you add the capture files into docs/.
