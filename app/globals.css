@@ -84,7 +84,7 @@ main {
    in the open space between the side panels. */
 @media (min-width: 1025px) {
   .globe-layer {
-    transform: translateX(-10vw);
+    transform: translateX(-13vw);
   }
 }
 
