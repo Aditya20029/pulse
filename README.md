@@ -79,24 +79,28 @@ Also: [embed widget](https://global-pulse-ai.site/embed) · [printable report](h
 <!-- Hero: the live generated social card (renders immediately, no upload needed) -->
 <img src="https://global-pulse-ai.site/opengraph-image" alt="Pulse, Global News Intelligence Globe" width="100%" />
 
-<!-- Gallery + demo GIF: add your own captures into docs/ (instructions below) -->
-<table>
-  <tr>
-    <td width="50%"><img src="docs/globe.png" alt="3D news globe with event clusters" /></td>
-    <td width="50%"><img src="docs/briefing.png" alt="Claude intelligence briefing panel" /></td>
-  </tr>
-  <tr>
-    <td width="50%"><img src="docs/intel.png" alt="Intelligence panel with live channels and AI analysis" /></td>
-    <td width="50%"><img src="docs/mobile.png" alt="Mobile layout" /></td>
-  </tr>
-</table>
+<!--
+  GALLERY: uncomment this block once you add the capture files into docs/.
+  Until then it stays hidden so the README shows no broken image links.
 
-![Pulse demo](docs/demo.gif)
+  <table>
+    <tr>
+      <td width="50%"><img src="docs/globe.png" alt="3D news globe with event clusters" /></td>
+      <td width="50%"><img src="docs/briefing.png" alt="Claude intelligence briefing panel" /></td>
+    </tr>
+    <tr>
+      <td width="50%"><img src="docs/intel.png" alt="Intelligence panel with live channels and AI analysis" /></td>
+      <td width="50%"><img src="docs/mobile.png" alt="Mobile layout" /></td>
+    </tr>
+  </table>
 
-> **How to generate these assets** (all built into the app):
-> 1. **Stills:** open the live site, frame a shot, click **Export, HD** (or **4K poster**) in the top bar. Save the PNGs into `docs/` as `globe.png`, `briefing.png` (open a cluster first), `intel.png` (scroll the right panel), and `mobile.png` (phone screenshot).
-> 2. **Demo GIF:** click **REC** on the bottom timeline to capture a 10s `.webm`, then convert to `docs/demo.gif` (e.g. `ffmpeg -i pulse-timelapse.webm -vf "fps=15,scale=900:-1" docs/demo.gif`, or any online webm to gif tool).
-> 3. Commit the `docs/` folder. The images above render automatically.
+  ![Pulse demo](docs/demo.gif)
+-->
+
+> **Add your own screenshots / demo GIF** (all capture tools are built into the app), then uncomment the gallery block in this file:
+> 1. **Stills:** open the live site, frame a shot, click **Export, HD** (or **4K poster**) in the top bar. Save into `docs/` as `globe.png`, `briefing.png` (open a cluster first), `intel.png` (scroll the right panel), and `mobile.png` (phone screenshot).
+> 2. **Demo GIF:** click **REC** on the bottom timeline to capture a 10s `.webm`, then convert to `docs/demo.gif` (e.g. `ffmpeg -i pulse-timelapse.webm -vf "fps=15,scale=900:-1" docs/demo.gif`).
+> 3. Commit `docs/` and uncomment the `<table>` + GIF block above.
 
 ---
 
