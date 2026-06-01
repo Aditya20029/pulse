@@ -61,7 +61,7 @@ export function IntelligencePanel() {
           </span>
         </div>
 
-        <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
+        <div className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-5 pt-5 pb-48">
           <section>
             <SectionHeader>Live channels</SectionHeader>
             <div className="mt-3">

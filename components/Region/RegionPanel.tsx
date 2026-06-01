@@ -121,7 +121,7 @@ export function RegionPanel() {
               </div>
             </div>
 
-            <div className="min-h-0 flex-1 touch-pan-y space-y-5 overflow-y-auto overscroll-contain px-5 pt-5 pb-24 md:pb-5">
+            <div className="min-h-0 flex-1 touch-pan-y space-y-5 overflow-y-auto overscroll-contain px-5 pt-5 pb-24 min-[1025px]:pb-48">
               {stats.totalEvents === 0 ? (
                 <div className="rounded border border-cyan-400/10 bg-cyan-400/5 px-3 py-4 text-center font-mono text-[11px] uppercase tracking-wider text-cyan-200/55">
                   No tracked events in this country

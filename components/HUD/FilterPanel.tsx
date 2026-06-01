@@ -61,7 +61,7 @@ export function FilterPanel() {
   }, [clusters]);
 
   return (
-    <div className="pointer-events-none absolute left-4 top-24 z-20 flex max-h-[calc(100vh-180px)] w-64 flex-col gap-3 overflow-y-auto pr-1">
+    <div className="pointer-events-none absolute left-4 top-24 z-20 flex max-h-[calc(100vh-180px)] w-64 flex-col gap-3 overflow-y-auto overscroll-contain pb-48 pr-1">
       <Panel className="pointer-events-auto">
         <PanelHeader
           label="Live"
