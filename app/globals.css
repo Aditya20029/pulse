@@ -78,6 +78,16 @@ main {
   cursor: crosshair;
 }
 
+/* Desktop: the right side carries the Intelligence panel + tactical rail, so
+   true viewport-center reads as "pushed right." Nudge the globe left with a
+   pure translate (no scale, so raycasting stays pixel-accurate) to center it
+   in the open space between the side panels. */
+@media (min-width: 1025px) {
+  .globe-layer {
+    transform: translateX(-7vw);
+  }
+}
+
 @media (max-width: 1024px) {
   .globe-layer {
     cursor: default;
