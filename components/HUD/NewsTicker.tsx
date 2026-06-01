@@ -2,6 +2,7 @@
 
 import useSWR from "swr";
 import { CATEGORY_COLORS, FeedHeadline } from "@/lib/types";
+import { safeUrl } from "@/lib/safe-url";
 
 interface FeedResponse {
   headlines: FeedHeadline[];
@@ -38,7 +39,7 @@ export function NewsTicker() {
             {looped.map((h, i) => (
               <a
                 key={`${h.id}-${i}`}
-                href={h.url || "#"}
+                href={safeUrl(h.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 transition hover:text-zinc-100"

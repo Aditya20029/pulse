@@ -51,3 +51,21 @@ export function clientKey(request: Request): string {
   if (fwd) return fwd.split(",")[0].trim();
   return request.headers.get("x-real-ip") ?? "anonymous";
 }
+
+/**
+ * Blocks cross-site abuse of the AI endpoints (someone embedding our API as a
+ * free Claude proxy on their own page). If a browser Origin header is present
+ * it must match our own host. Requests without an Origin (same-origin GETs,
+ * server-side, curl) are allowed — the rate limiter still applies to those.
+ */
+export function isSameOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  try {
+    const originHost = new URL(origin).host;
+    const host = request.headers.get("host");
+    return !!host && originHost === host;
+  } catch {
+    return false;
+  }
+}

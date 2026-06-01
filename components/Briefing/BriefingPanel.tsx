@@ -13,6 +13,7 @@ import {
   downloadMarkdown,
 } from "@/lib/markdown-export";
 import { ListenButton } from "./ListenButton";
+import { safeUrl } from "@/lib/safe-url";
 
 function SeverityBar({ value }: { value: number }) {
   const pct = Math.max(0, Math.min(100, value * 10));
@@ -476,7 +477,7 @@ export function BriefingPanel() {
                     {sources.map((s) => (
                       <a
                         key={s.source}
-                        href={s.url}
+                        href={safeUrl(s.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block rounded border border-cyan-400/10 bg-white/[0.02] px-3 py-2 transition hover:border-cyan-400/30 hover:bg-cyan-400/5"

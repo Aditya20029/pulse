@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import {
   anthropic,
   BRIEFING_MODEL,
+  UNTRUSTED_DATA_GUARD,
 } from "@/lib/claude";
 import { Cluster } from "@/lib/types";
 
-import { rateLimit, clientKey } from "@/lib/rate-limit";
+import { rateLimit, clientKey, isSameOrigin } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -83,6 +84,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
+  if (!isSameOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
   if (!rateLimit(`${clientKey(request)}:anomalies`, 30, 60_000).allowed) {
     return NextResponse.json(fallbackAnomalies(clusters), { status: 429 });
   }
@@ -103,7 +107,7 @@ export async function POST(request: Request) {
     const response = await anthropic.messages.create({
       model: BRIEFING_MODEL,
       max_tokens: 1200,
-      system: SYSTEM_PROMPT,
+      system: `${SYSTEM_PROMPT}\n\n${UNTRUSTED_DATA_GUARD}`,
       messages: [
         {
           role: "user",

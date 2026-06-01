@@ -3,6 +3,7 @@
 import useSWR from "swr";
 import { useGlobeStore } from "@/stores/useGlobeStore";
 import { CATEGORY_COLORS, FeedHeadline } from "@/lib/types";
+import { safeUrl, isSafeUrl } from "@/lib/safe-url";
 
 interface FeedResponse {
   headlines: FeedHeadline[];
@@ -32,8 +33,8 @@ export function BottomTicker() {
     if (match) {
       selectCluster(match.id);
       flyTo(match.lat, match.lng);
-    } else if (h.url) {
-      window.open(h.url, "_blank", "noopener,noreferrer");
+    } else if (isSafeUrl(h.url)) {
+      window.open(safeUrl(h.url), "_blank", "noopener,noreferrer");
     }
   };
 

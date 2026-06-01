@@ -2,6 +2,7 @@
 
 import useSWR from "swr";
 import { CATEGORY_COLORS, FeedHeadline } from "@/lib/types";
+import { safeUrl } from "@/lib/safe-url";
 
 interface FeedResponse {
   headlines: FeedHeadline[];
@@ -55,7 +56,7 @@ export function LiveActivity() {
       {items.map((h) => (
         <a
           key={h.id}
-          href={h.url || "#"}
+          href={safeUrl(h.url)}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-start gap-2 rounded border border-zinc-800/50 bg-white/[0.015] px-2 py-1.5 transition hover:border-zinc-700 hover:bg-white/[0.04]"

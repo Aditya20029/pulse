@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { anthropic, BRIEFING_MODEL } from "@/lib/claude";
+import { anthropic, BRIEFING_MODEL, UNTRUSTED_DATA_GUARD } from "@/lib/claude";
 import { Cluster } from "@/lib/types";
 
-import { rateLimit, clientKey } from "@/lib/rate-limit";
+import { rateLimit, clientKey, isSameOrigin } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -45,6 +45,9 @@ function buildContext(req: ChatRequest): string {
 }
 
 export async function POST(request: Request) {
+  if (!isSameOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
   const limit = rateLimit(`${clientKey(request)}:chat`, 30, 60_000);
   if (!limit.allowed) {
     return NextResponse.json(
@@ -58,6 +61,14 @@ export async function POST(request: Request) {
     req = (await request.json()) as ChatRequest;
   } catch {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
+  }
+
+  // Input caps: keep prompts bounded regardless of client payload
+  req.message = (req.message ?? "").slice(0, 500);
+  if (Array.isArray(req.clusters)) req.clusters = req.clusters.slice(0, 60);
+  if (Array.isArray(req.history)) req.history = req.history.slice(-6);
+  if (!req.message.trim()) {
+    return NextResponse.json({ reply: "Ask me something about the globe." });
   }
 
   if (!anthropic) {
@@ -81,7 +92,7 @@ export async function POST(request: Request) {
     const response = await anthropic.messages.create({
       model: BRIEFING_MODEL,
       max_tokens: 400,
-      system: SYSTEM_PROMPT,
+      system: `${SYSTEM_PROMPT}\n\n${UNTRUSTED_DATA_GUARD}`,
       messages,
     });
     const textBlock = response.content.find((b) => b.type === "text");

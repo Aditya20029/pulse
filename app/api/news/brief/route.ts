@@ -5,7 +5,7 @@ import {
   BRIEFING_SYSTEM_PROMPT,
 } from "@/lib/claude";
 import { BriefingResponse, Cluster } from "@/lib/types";
-import { rateLimit, clientKey } from "@/lib/rate-limit";
+import { rateLimit, clientKey, isSameOrigin } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -41,6 +41,9 @@ const LANG_NAMES: Record<string, string> = {
 };
 
 export async function POST(request: Request) {
+  if (!isSameOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
   const limit = rateLimit(`${clientKey(request)}:brief`, 45, 60_000);
   if (!limit.allowed) {
     return NextResponse.json(
