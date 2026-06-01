@@ -196,7 +196,7 @@ export function AskClaude() {
       </div>
       <div
         ref={scrollRef}
-        className="flex-1 space-y-2.5 overflow-y-auto px-4 py-3"
+        className="flex-1 touch-pan-y space-y-2.5 overflow-y-auto overscroll-contain px-4 py-3"
       >
         {messages.length === 0 && (
           <div className="space-y-2">

@@ -69,7 +69,10 @@ function MobileTopBar() {
     ? `${String(now.getUTCHours()).padStart(2, "0")}:${String(now.getUTCMinutes()).padStart(2, "0")} UTC`
     : "--:-- UTC";
   return (
-    <div className="pointer-events-auto absolute inset-x-0 top-0 z-30 flex items-center justify-between border-b border-zinc-800/60 bg-[rgba(4,6,12,0.82)] px-3 py-2 backdrop-blur-md">
+    <div
+      className="pointer-events-auto fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-zinc-800/60 bg-[rgba(4,6,12,0.82)] px-3 py-2 backdrop-blur-md"
+      style={{ paddingTop: "calc(0.5rem + env(safe-area-inset-top))" }}
+    >
       <div className="flex items-center gap-2">
         <span className="flex h-5 w-5 items-center justify-center rounded bg-lime-400/15">
           <span className="h-1.5 w-1.5 rounded-full bg-lime-400" />
@@ -117,7 +120,10 @@ function TabBar({
     { id: "markets", label: "Data", icon: "$" },
   ];
   return (
-    <div className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 flex border-t border-zinc-800/70 bg-[rgba(4,6,12,0.95)] backdrop-blur-md">
+    <div
+      className="pointer-events-auto fixed inset-x-0 bottom-0 z-[60] flex border-t border-zinc-800/70 bg-[rgba(4,6,12,0.97)] backdrop-blur-md"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
       {tabs.map((t) => {
         const on = active === t.id;
         return (
@@ -125,7 +131,7 @@ function TabBar({
             key={t.id}
             type="button"
             onClick={() => onSelect(t.id)}
-            className="flex flex-1 flex-col items-center gap-0.5 py-2.5"
+            className="flex flex-1 flex-col items-center gap-0.5 py-3"
           >
             <span
               className="font-mono text-base leading-none"
