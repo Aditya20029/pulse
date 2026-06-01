@@ -310,7 +310,7 @@ export function BriefingPanel() {
               </div>
             </div>
 
-            <div className="flex-1 touch-pan-y space-y-5 overflow-y-auto overscroll-contain px-5 pt-5 pb-24 md:pb-5">
+            <div className="min-h-0 flex-1 touch-pan-y space-y-5 overflow-y-auto overscroll-contain px-5 pt-5 pb-24 md:pb-5">
               <section>
                 <h3 className="mb-2 font-mono text-[10px] uppercase tracking-[0.25em] text-cyan-300/70">
                   Severity

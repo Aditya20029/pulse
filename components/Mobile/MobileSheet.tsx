@@ -47,7 +47,7 @@ export function MobileSheet({ open, title, onClose, children }: Props) {
           </button>
         </div>
         <div
-          className="flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4"
+          className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4"
           style={{
             WebkitOverflowScrolling: "touch",
             touchAction: "pan-y",
