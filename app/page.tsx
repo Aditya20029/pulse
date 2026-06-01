@@ -45,13 +45,20 @@ export default function Home() {
 
   return (
     <>
-    <main className="relative h-screen w-screen overflow-hidden">
+    {/*
+      Globe lives in its own full-viewport layer that is NEVER zoomed. CSS `zoom`
+      on an ancestor breaks WebGL raycasting (pointer-to-ray math is computed
+      against the scaled box), which made country hover land far from the cursor.
+      Keeping the canvas at 1:1 fixes hit-testing; only the HUD (main) is zoomed.
+    */}
+    <div className="globe-layer">
+      <GlobeErrorBoundary>
+        <Globe />
+      </GlobeErrorBoundary>
+    </div>
+
+    <main className="pointer-events-none relative z-10 h-screen w-screen overflow-hidden">
       <div className="terminal-grid" />
-      <div className="absolute inset-0 z-10">
-        <GlobeErrorBoundary>
-          <Globe />
-        </GlobeErrorBoundary>
-      </div>
 
       {/* MOBILE / TABLET (<=1024px): dedicated layout. Desktop tree below is untouched. */}
       {isMobile === true && <MobileApp />}

@@ -68,6 +68,22 @@ main {
   zoom: 0.88;
 }
 
+/* The WebGL globe sits in its own full-viewport layer at 1:1 scale (never
+   zoomed) so pointer raycasting stays pixel-accurate. The HUD (main) is the
+   only thing zoomed, and it floats above this layer. */
+.globe-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  cursor: crosshair;
+}
+
+@media (max-width: 1024px) {
+  .globe-layer {
+    cursor: default;
+  }
+}
+
 /* Mobile / tablet: never zoom, and let content scroll naturally. The mobile
    layout (components/Mobile) handles its own positioning at 1:1 scale. */
 @media (max-width: 1024px) {
