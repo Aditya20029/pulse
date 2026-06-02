@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -55,7 +56,10 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="relative h-full min-h-full overflow-hidden">{children}</body>
+      <body className="relative h-full min-h-full overflow-hidden">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

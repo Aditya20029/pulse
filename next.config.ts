@@ -9,11 +9,11 @@ import type { NextConfig } from "next";
 // - frame-src youtube: the embedded live channels.
 const cspDirectives = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://cdn.jsdelivr.net https://earthquake.usgs.gov",
+  "connect-src 'self' https://cdn.jsdelivr.net https://earthquake.usgs.gov https://va.vercel-scripts.com",
   "worker-src 'self' blob:",
   "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
   "base-uri 'self'",
